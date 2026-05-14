@@ -1,4 +1,8 @@
 -- Linguagem SQL padrão ANSI-92 ou SQL-92
+
+-- Exclusão do banco de dados, se existir
+DROP DATABASE IF EXISTS escola;
+
 -- Criação do banco de dados escola
 CREATE DATABASE IF NOT EXISTS escola;
 
@@ -16,35 +20,47 @@ CREATE TABLE IF NOT EXISTS alunos
   data_nascimento DATE NOT NULL,
   telefone VARCHAR(15),
   email VARCHAR(50),
-  localidade VARCHAR(60),
+  cidade VARCHAR(60),
   bairro VARCHAR(30),
   estado CHAR(2)
 );
 
---Inserindo registro usando uma linguagem SQL Data Manipulation Languag
-
-  INSERT INTO alunos VALUES 
-  (
-    25999, 'Bruno Zerneri Camargo', 11111111111, 'M', '2009-07-13','(16) 99999-9999' , 'brunozcamargo013@gmail.com', 'Jaboticabal', 'Marginal' , 'SP'), 
-  (25997, 'Sicrana de Souza', 55555555555 , 'F', '2005-01-18', '(16) 98888-8888','sicrana@gmail.com' 'Graxupé', 'Jardim Imperial' , 'MG');
-
+-- Inserção de registros na tabela de alunos
+INSERT INTO alunos VALUES
+(26005, 'Nelson Cauã Mateus Assis', 66922492285, 'M', '2003-03-06', '(83) 98626-0699', 'nelsonassis@hotmmail.com', 'João Pessoa', 'Jardim Funcionários', 'PB'),
+(26101, 'Fátima Giovana Alves', 44355321150, 'F', '1999-04-11', '(96) 98990-4343', 'fatima.alves@umbernardo.com.br', 'Macapá', 'Res. Nova Esperança', 'AP'),
+(26255, 'Otávio Yago de Paula', 85430391506, 'M', '2000-01-13', '(61) 99311-3613', 'otavio_depaula@abbott.com', 'Luziânia', 'Parque Estrela Dalva', 'GO');
 
 -- Criação da tabela professores
 CREATE TABLE IF NOT EXISTS professores
 ( matricula INT PRIMARY KEY AUTO_INCREMENT,
   cpf DECIMAL(11) NOT NULL,
   nome VARCHAR(50) NOT NULL,
-  celular VARCHAR(15) NOT NULL,
-  email VARCHAR(25) NOT NULL
+  celular VARCHAR(16) NOT NULL,
+  email VARCHAR(40) NOT NULL,
+  formacao VARCHAR(20)
 );
+
+-- Inserção de registros de professores
+INSERT INTO professores VALUES
+(0, 22700586310, 'Bruna Luíza Cavalcanti', '(11) 99687-7865', 'bruna_cavalcanti@band.com.br', 'Engenharia Civil'),
+(0, 55554269176, 'Elza Camila Nair Ferreira', '(14) 99604-2654', 'elza.ferreira@tglaw.com.br', 'Pedagogia'),
+(0, 23165647801, 'Levi Gustavo de Paula', '(83) 99118-6558', 'levigustavo@pib.com.br', 'Matemática');
 
 -- Criação da tabela cursos
 CREATE TABLE IF NOT EXISTS cursos
 ( id_curso INT(5) PRIMARY KEY AUTO_INCREMENT,
   nome_curso VARCHAR(40) NOT NULL,
   area VARCHAR(20) NOT NULL,
-  duracao TEXT(10) NOT NULL
+  duracao TEXT(12) NOT NULL,
+  data_cadastro TIMESTAMP
 );
+
+-- Inserção de registros na tabela de cursos
+INSERT INTO cursos VALUES
+(0, 'Técnico em Informática', 'Tecnologia', '3 semestres', CURRENT_TIMESTAMP),
+(0, 'Técnico em Farmácia', 'Ambiente e saúde', '3 semestres', CURRENT_TIMESTAMP),
+(0, 'Técnico em Mecânica', 'Indústria', '3 semestres', CURRENT_TIMESTAMP);
 
 -- Criação da tabela horários
 CREATE TABLE IF NOT EXISTS horarios
@@ -53,10 +69,16 @@ CREATE TABLE IF NOT EXISTS horarios
   data_cadastro TIMESTAMP
 );
 
+-- Inserção de horário
+INSERT INTO horarios VALUES
+(0,'integral',CURRENT_TIMESTAMP),
+(0,'noturno',CURRENT_TIMESTAMP),
+(0,'Manha',CURRENT_TIMESTAMP);
+
 -- Criação da tabela turmas
 CREATE TABLE IF NOT EXISTS turmas
-( codigo_turma INT(5) PRIMARY KEY,
-  descricao TEXT(20) NOT NULL, 
+( codigo_turma INT(5) PRIMARY KEY AUTO_INCREMENT,
+  descricao TEXT(40) NOT NULL, 
   data_cadastro TIMESTAMP,  
   rm_aluno INT(6),
   id_curso INT(5),
@@ -68,6 +90,11 @@ CREATE TABLE IF NOT EXISTS turmas
   -- Chave estrangeira com a tabela horários
   FOREIGN KEY (id_horario) REFERENCES horarios (cod_horario)
 );
+INSERT INTo turmas VALUES
+(0,'Turma formada por 40 alunos',CURRENT_TIMESTAMP,26005,1,1),
+(0,'Turma formada por 20 alunos',CURRENT_TIMESTAMP,26101,2,2),
+(0,'Turma formada por 60 alunos',CURRENT_TIMESTAMP,26255,3,3);
+
 
 
 
